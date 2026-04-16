@@ -8,14 +8,14 @@ provider "proxmox" {
 locals {
   # Only real VMs here (VIPs are excluded)
   vms = {
-    rke2-master1 = { ip = "172.16.0.51", role = "control-plane", cores = 8,  memory = 16384, disk_gb = 60 }
-    rke2-master2 = { ip = "172.16.0.52", role = "control-plane", cores = 8,  memory = 16384, disk_gb = 60 }
-    rke2-master3 = { ip = "172.16.0.53", role = "control-plane", cores = 8,  memory = 16384, disk_gb = 60 }
-    rke2-agent1  = { ip = "172.16.0.54", role = "worker",        cores = 8,  memory = 32768, disk_gb = 80 }
-    rke2-agent2  = { ip = "172.16.0.55", role = "worker",        cores = 8,  memory = 32768, disk_gb = 80 }
-    rke2-agent3  = { ip = "172.16.0.56", role = "worker",        cores = 8,  memory = 32768, disk_gb = 80 }
-    rke2-ha1     = { ip = "172.16.0.57", role = "ha-proxy",      cores = 2,  memory = 4096,  disk_gb = 20 }
-    rke2-ha2     = { ip = "172.16.0.58", role = "ha-proxy",      cores = 2,  memory = 4096,  disk_gb = 20 }
+    rke2-master1 = { ip = "192.168.0.211", role = "control-plane", cores = 3,  memory = 4096, disk_gb = 60 }
+    rke2-master2 = { ip = "192.168.0.212", role = "control-plane", cores = 3,  memory = 4096, disk_gb = 60 }
+    rke2-master3 = { ip = "192.168.0.213", role = "control-plane", cores = 3,  memory = 4096, disk_gb = 60 }
+    rke2-agent1  = { ip = "192.168.0.214", role = "worker",        cores = 2,  memory = 8192, disk_gb = 80 }
+    rke2-agent2  = { ip = "192.168.0.215", role = "worker",        cores = 2,  memory = 8192, disk_gb = 80 }
+    rke2-agent3  = { ip = "192.168.0.216", role = "worker",        cores = 2,  memory = 8192, disk_gb = 80 }
+    rke2-ha1     = { ip = "192.168.0.217", role = "ha-proxy",      cores = 1,  memory = 2048,  disk_gb = 20 }
+    rke2-ha2     = { ip = "192.168.0.218", role = "ha-proxy",      cores = 1,  memory = 2048,  disk_gb = 20 }
   }
 
   # Keep order stable to derive VMIDs deterministically
@@ -37,8 +37,8 @@ locals {
 
   # VIPs (informational only, no VMs created)
   vips = {
-    rke2_vip_lb = "172.16.0.50" # MetalLB VIP (K8s level)
-    rke2_ha_vip = "172.16.0.59" # Keepalived/HAProxy VIP
+    rke2_vip_lb = "192.168.0.210" # MetalLB VIP (K8s level)
+    rke2_ha_vip = "192.168.0.219" # Keepalived/HAProxy VIP
   }
 
   snippet_role_map = {
@@ -60,7 +60,7 @@ locals {
     { for k in local.network_vms : k => "network=cephfs:snippets/${k}-network.yml" },
     { for k in local.snippet_vms : k => "user=cephfs:snippets/${k}.yml,network=cephfs:snippets/${k}-network.yml" }
   )
-  dns1 = "172.16.0.1"
+  dns1 = "192.168.0.1"
 
   target_node_map = {
     "rke2-master1" = "proxmox-srv-000"

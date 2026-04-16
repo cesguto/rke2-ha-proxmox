@@ -18,4 +18,4 @@ packages:
 
 runcmd:
   - [ systemctl, enable, --now, qemu-guest-agent ]
-  # Se quiser, posso gerar aqui configs de haproxy/keepalived com o VIP 172.16.0.59
+  # Se quiser, posso gerar aqui configs de haproxy/keepalived com o VIP 192.168.0.219

@@ -50,16 +50,16 @@ The following are the recommended VM specifications for this cluster. The goal i
 
 | Hostname        | IP           | Role                          |
 |-----------------|--------------|-------------------------------|
-| rke2-vip-lb     | 172.16.0.50  | MetalLB VIP                   |
-| rke2-master1    | 172.16.0.51  | Control Plane                 |
-| rke2-master2    | 172.16.0.52  | Control Plane                 |
-| rke2-master3    | 172.16.0.53  | Control Plane                 |
-| rke2-agent1     | 172.16.0.54  | Worker Node                   |
-| rke2-agent2     | 172.16.0.55  | Worker Node                   |
-| rke2-agent3     | 172.16.0.56  | Worker Node                   |
-| rke2-ha1        | 172.16.0.57  | Fixed Address Registration    |
-| rke2-ha2        | 172.16.0.58  | Fixed Address Registration    |
-| rke2-ha-vip     | 172.16.0.59  | Fixed Address Registration VIP |
+| rke2-vip-lb     | 192.168.0.210  | MetalLB VIP                   |
+| rke2-master1    | 192.168.0.211  | Control Plane                 |
+| rke2-master2    | 192.168.0.212  | Control Plane                 |
+| rke2-master3    | 192.168.0.213  | Control Plane                 |
+| rke2-agent1     | 192.168.0.214  | Worker Node                   |
+| rke2-agent2     | 192.168.0.215  | Worker Node                   |
+| rke2-agent3     | 192.168.0.216  | Worker Node                   |
+| rke2-ha1        | 192.168.0.217  | Fixed Address Registration    |
+| rke2-ha2        | 192.168.0.218  | Fixed Address Registration    |
+| rke2-ha-vip     | 192.168.0.219  | Fixed Address Registration VIP |
 
 > Adjust IP's and Hostnames as needed based on your network.
 

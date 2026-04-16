@@ -609,7 +609,7 @@ alertmanager:
     ## Hosts must be provided if Ingress is enabled.
     ##
     hosts:
-      - alertmanager.my.lab
+      - alertmanager.my.int
 
     ## Paths to use for ingress rules - one path should match the alertmanagerSpec.routePrefix
     ##
@@ -626,7 +626,7 @@ alertmanager:
     tls:
       - secretName: alertmanager-general-tls
         hosts:
-        - alertmanager.my.lab
+        - alertmanager.my.int
 
   # -- BETA: Configure the gateway routes for the chart here.
   # More routes can be added by adding a dictionary key like the 'main' route.
@@ -1331,7 +1331,7 @@ grafana:
     # hosts:
     #   - grafana.domain.com
     hosts:
-      - grafana.my.lab
+      - grafana.my.int
 
     ## Path for grafana ingress
     path: /
@@ -1342,7 +1342,7 @@ grafana:
     tls:
       - secretName: grafana-general-tls
         hosts:
-        - grafana.my.lab
+        - grafana.my.int
 
   # # To make Grafana persistent (Using Statefulset)
   # #
@@ -3721,7 +3721,7 @@ prometheus:
     # hosts:
     #   - prometheus.domain.com
     hosts:
-      - prometheus.my.lab
+      - prometheus.my.int
 
     ## Paths to use for ingress rules - one path should match the prometheusSpec.routePrefix
     ##
@@ -3738,7 +3738,7 @@ prometheus:
     tls:
       - secretName: prometheus-general-tls
         hosts:
-          - prometheus.my.lab
+          - prometheus.my.int
 
   # -- BETA: Configure the gateway routes for the chart here.
   # More routes can be added by adding a dictionary key like the 'main' route.
