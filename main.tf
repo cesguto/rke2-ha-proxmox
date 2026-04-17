@@ -60,7 +60,10 @@ locals {
     { for k in local.network_vms : k => "network=cephfs:snippets/${k}-network.yml" },
     { for k in local.snippet_vms : k => "user=cephfs:snippets/${k}.yml,network=cephfs:snippets/${k}-network.yml" }
   )
-  dns1 = "192.168.0.1"
+  # Lista de resolvers para o Netplan (cloud-init); ordem = prioridade de uso típica do glibc/systemd-resolved
+  dns_servers = ["192.168.0.1", "8.8.8.8"]
+
+  dns_addresses_yaml = join("\n", [for a in local.dns_servers : "        - ${a}"])
 
   target_node_map = {
     "rke2-master1" = "proxmox-srv-000"
@@ -78,10 +81,10 @@ resource "local_file" "network_data" {
   for_each = toset(local.network_vms)
   filename = "${path.module}/.rendered/${each.key}-network.yml"
   content = templatefile("${path.module}/templates/net-common.yaml", {
-    ip           = local.vms[each.key].ip
-    cidr_prefix  = var.cidr_prefix
-    gateway      = var.gateway
-    dns1         = local.dns1
+    ip                 = local.vms[each.key].ip
+    cidr_prefix        = var.cidr_prefix
+    gateway            = var.gateway
+    dns_addresses_yaml = local.dns_addresses_yaml
   })
 }
 
@@ -111,7 +114,7 @@ resource "null_resource" "upload_network_snippet" {
       ip          = local.vms[each.key].ip
       cidr_prefix = var.cidr_prefix
       gateway     = var.gateway
-      dns1        = local.dns1
+      dns_servers         = local.dns_servers
     }))
   }
 }

@@ -1,5 +1,5 @@
 variable "pm_api_url" {
-  description = "Proxmox API URL, e.g. https://<YOUR_IP>:8006/api2/json"
+  description = "Proxmox API URL, e.g. https://192.168.0.5:8006/api2/json"
   type        = string
 }
 
@@ -56,7 +56,7 @@ variable "ssh_public_key_file" {
 variable "gateway" {
   description = "Default gateway for the subnet"
   type        = string
-  default     = "<YOUR_GATEWAY_IP>"
+  default     = "192.168.15.254"
 }
 
 variable "cidr_prefix" {
@@ -68,7 +68,7 @@ variable "cidr_prefix" {
 variable "vmid_base" {
   description = "Base VMID to start from; each VM adds an offset"
   type        = number
-  default     = 7000
+  default     = 200
 }
 
 variable "cpu_type" {
@@ -79,19 +79,19 @@ variable "cpu_type" {
 
 variable "storage_etcd" { 
     type = string
-    default = "<YOUR_STORAGE>" 
+    default = "local-lvm" 
 }
 variable "storage_container" { 
     type = string
-    default = "<YOUR_STORAGE>"
+    default = "local-lvm"
 }
 variable "storage_kubelet" { 
     type = string
-    default = "<YOUR_STORAGE>" 
+    default = "local-lvm" 
 }
 variable "storage_logs" { 
     type = string 
-    default = "<YOUR_STORAGE>" 
+    default = "local-lvm" 
 }
 
 variable "size_etcd_gb" { 
@@ -118,11 +118,11 @@ variable "size_logs_gb" {
 # Snippets de cloud-init (no storage snippets do Proxmox)
 variable "ci_user_master" { 
     type = string
-    default = "<YOUR_STORAGE>:snippets/rke2-master-userdata.yaml" 
+    default = "local-lvm:snippets/rke2-master-userdata.yaml" 
 }
 variable "ci_user_worker" { 
     type = string
-    default = "<YOUR_STORAGE>:snippets/rke2-worker-userdata.yaml" 
+    default = "local-lvm:snippets/rke2-worker-userdata.yaml" 
 }
 
 variable "proxmox_ssh_host" { 
@@ -142,13 +142,13 @@ variable "proxmox_ssh_key_path" {
 # Path inside the node where the cephfs snippets live (adjust if needed)
 variable "snippets_dir" { 
     type = string
-    default = "<YOUR_STORAGE>/snippets"
+    default = "local-lvm/snippets"
 }
 
 variable "cloudinit_storage" {
   type        = string
   description = "Storage to hold the cloud-init ISO"
-  default     = "<YOUR_STORAGE>"  # or "local-lvm"
+  default     = "local-lvm"  # or "local-lvm"
 }
 
 variable "ci_username" {
