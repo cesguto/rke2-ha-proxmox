@@ -94,6 +94,12 @@ variable "storage_logs" {
     default = "local-lvm" 
 }
 
+variable "storage_longhorn" {
+  description = "Proxmox storage for the Longhorn data disk on worker nodes"
+  type        = string
+  default     = "local-lvm"
+}
+
 variable "size_etcd_gb" { 
     type = number
     default = 20 
@@ -113,6 +119,12 @@ variable "size_kubelet_worker_gb" {
 variable "size_logs_gb" { 
     type = number
     default = 40 
+}
+
+variable "size_longhorn_gb" {
+  description = "Longhorn data disk size (GB) on worker nodes"
+  type        = number
+  default     = 100
 }
 
 # Snippets de cloud-init (no storage snippets do Proxmox)
@@ -136,7 +148,7 @@ variable "proxmox_ssh_user" {
 
 variable "proxmox_ssh_key_path" { 
     type = string
-    default = "~/.ssh/id_rsa" 
+    default = "C:/Projetos/chaves/.ssh/id_ed25519" 
 }
 
 # Path inside the node where the cephfs snippets live (adjust if needed)

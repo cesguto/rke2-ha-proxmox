@@ -57,8 +57,8 @@ locals {
   # Masters/agents: user + network
   # HA nodes: apenas network
   cicustom_map = merge(
-    { for k in local.network_vms : k => "network=cephfs:snippets/${k}-network.yml" },
-    { for k in local.snippet_vms : k => "user=cephfs:snippets/${k}.yml,network=cephfs:snippets/${k}-network.yml" }
+    { for k in local.network_vms : k => "network=local:snippets/${k}-network.yml" },
+    { for k in local.snippet_vms : k => "user=local:snippets/${k}.yml,network=local:snippets/${k}-network.yml" }
   )
   # Lista de resolvers para o Netplan (cloud-init); ordem = prioridade de uso típica do glibc/systemd-resolved
   dns_servers = ["192.168.0.1", "8.8.8.8"]
@@ -66,14 +66,14 @@ locals {
   dns_addresses_yaml = join("\n", [for a in local.dns_servers : "        - ${a}"])
 
   target_node_map = {
-    "rke2-master1" = "proxmox-srv-000"
-    "rke2-agent1"  = "proxmox-srv-000"
-    "rke2-ha1"     = "proxmox-srv-000"
-    "rke2-master2" = "proxmox-srv-001"
-    "rke2-agent2"  = "proxmox-srv-001"
-    "rke2-ha2"     = "proxmox-srv-001"
-    "rke2-master3" = "proxmox-srv-003"
-    "rke2-agent3"  = "proxmox-srv-003"
+    "rke2-master1" = "pve"
+    "rke2-agent1"  = "pve"
+    "rke2-ha1"     = "pve"
+    "rke2-master2" = "pve"
+    "rke2-agent2"  = "pve"
+    "rke2-ha2"     = "pve"
+    "rke2-master3" = "pve"
+    "rke2-agent3"  = "pve"
   }
 }
 
