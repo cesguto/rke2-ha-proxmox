@@ -154,7 +154,13 @@ variable "proxmox_ssh_key_path" {
 # Path inside the node where the cephfs snippets live (adjust if needed)
 variable "snippets_dir" { 
     type = string
-    default = "local-lvm/snippets"
+    default = "/var/lib/vz/snippets"
+}
+
+variable "snippets_storage" {
+  description = "Proxmox storage ID that exposes content type 'snippets' (ex: local, cephfs)"
+  type        = string
+  default     = "local"
 }
 
 variable "cloudinit_storage" {
@@ -172,5 +178,9 @@ variable "ci_username" {
 variable "ci_password_hash" {
   type        = string
   sensitive   = true
-  description = "SHA-512 hash for the user password (use mkpasswd --method=SHA-512)"
+  description = "Hash no formato crypt (não é a senha em texto). Ex.: SHA-512 ($6$...) ou yescrypt ($y$...). Gerar: openssl passwd -6  ou mkpasswd --method=SHA-512"
+  validation {
+    condition     = length(var.ci_password_hash) >= 20 && startswith(var.ci_password_hash, "$")
+    error_message = "ci_password_hash tem de ser um hash crypt (começa com '$', ex. $6$... ou $y$...). Texto plano não funciona no campo passwd do cloud-init."
+  }
 }

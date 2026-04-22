@@ -1,12 +1,10 @@
 #cloud-config
 hostname: ${name}
 ssh_pwauth: true
-chpasswd:
-  expire: false
 users:
   - name: ${username}
     lock_passwd: false
-    passwd: ${password_hash}   # SHA-512 hash (starts with $6$)
+    passwd: ${password_hash}
     shell: /bin/bash
     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
     ssh_authorized_keys:

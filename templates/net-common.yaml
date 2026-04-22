@@ -4,7 +4,10 @@ ethernets:
     dhcp4: false
     addresses:
       - ${ip}/${cidr_prefix}
-    gateway4: ${gateway}
+    routes:
+        - to: 0.0.0.0/0
+          via: 192.168.0.1
+    #gateway4: ${gateway}
     nameservers:
       addresses:
 ${dns_addresses_yaml}

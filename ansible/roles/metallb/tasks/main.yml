@@ -1,7 +1,7 @@
 - name: Install Helm
   ansible.builtin.shell: |
     set -o pipefail
-    bash /tmp/get-helm-3.sh
+    curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
   args:
     executable: /bin/bash
     creates: /usr/local/bin/helm

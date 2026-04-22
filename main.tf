@@ -57,8 +57,8 @@ locals {
   # Masters/agents: user + network
   # HA nodes: apenas network
   cicustom_map = merge(
-    { for k in local.network_vms : k => "network=local:snippets/${k}-network.yml" },
-    { for k in local.snippet_vms : k => "user=local:snippets/${k}.yml,network=local:snippets/${k}-network.yml" }
+    { for k in local.network_vms : k => "network=${var.snippets_storage}:snippets/${k}-network.yml" },
+    { for k in local.snippet_vms : k => "user=${var.snippets_storage}:snippets/${k}.yml,network=${var.snippets_storage}:snippets/${k}-network.yml" }
   )
   # Lista de resolvers para o Netplan (cloud-init); ordem = prioridade de uso típica do glibc/systemd-resolved
   dns_servers = ["192.168.0.1", "8.8.8.8"]

@@ -29,3 +29,7 @@ PRECISO COPIAR O make-template.sh para o PROXMOX
 
 DENTRO DO SHELL DO PROXMOX
 root@pve:/tmp# ./make-template.sh -i 110 -n rke2-template -I /tmp/noble-server-cloudimg-amd64.img -s local-lvm
+
+
+ci_password_hash     = "$6$rounds=656000$3UUkT1C5WbolLyMK$eVOCuOT6qIx7S2cCXkRKxMDtcp2Ips3bvk/szu6k4Sb1b8bbZW6APxDlCtdZRZ7v4AF.MxYNjYJTda2IRe5WY1"
+senha real: wyBscbGl!p$LPl3Mo4
