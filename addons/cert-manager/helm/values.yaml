@@ -1,0 +1,10 @@
+# Gráfico jetstack/cert-manager (v1.16.2). Documentação: https://cert-manager.io/docs/installation/helm/
+
+replicaCount: 1
+global:
+  commonLabels: {}
+
+# CRDs também vêm do Kustomize (includeCRDs: true); com Helm puro, mantenha enabled: true
+crds:
+  enabled: true
+  keep: true

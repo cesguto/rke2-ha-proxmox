@@ -1,0 +1,16 @@
+# Opcional: TLS com cert-manager (ingress.tls.source: secret no values + este Certificate).
+# 1) Aplique o ClusterIssuer desejado em cert-manager/issuers/
+# 2) Ajuste spec.dnsNames e o issuerRef.
+# 3) Em values.yaml do rancher: ingress.tls.source: secret, secretName: tls-rancher-ingress
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tls-rancher-ingress
+  namespace: cattle-system
+spec:
+  secretName: tls-rancher-ingress
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  dnsNames:
+    - rancher.ALTERE.O.SEU.DOMINIO

@@ -1,0 +1,15 @@
+# Instalação do cert-manager via repositório Helm Jetstack (reprodutível com chart).
+# A partir de addons/: kubectl kustomize --enable-helm cert-manager/helm | kubectl apply -f -
+# Necessita o binário helm no PATH (o Kustomize do kubectl invoca o Helm localmente).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: cert-manager
+resources:
+  - namespace.yaml
+helmCharts:
+  - name: cert-manager
+    repo: https://charts.jetstack.io
+    version: v1.16.2
+    releaseName: cert-manager
+    namespace: cert-manager
+    valuesFile: values.yaml

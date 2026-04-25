@@ -1,0 +1,37 @@
+Ordem recomendada de instalação
+================================
+Executar a partir do diretório "addons" (repositório) ou ajuste os caminhos.
+
+1) cert-manager
+   a) Padrão oficial, compatível com: kubectl apply -f <URL> (ficheiro único, sem repo local)
+      kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.16.2/cert-manager.yaml
+
+   b) Kustomize com a mesma versão (ficheiro addons/cert-manager/kustomization.yaml):
+      kubectl apply -k cert-manager
+
+   c) Gráfico Helm Jetstack (addons/cert-manager/helm): requer Helm no PATH
+      Linux: kubectl kustomize --enable-helm cert-manager/helm | kubectl apply -f -
+      PowerShell: kubectl kustomize --enable-helm cert-manager/helm | kubectl apply -f -
+
+2) Após o cert-manager estar Ready (ex.: kubectl get pods -n cert-manager -w),
+   emissores opcionais (ajuste o email e o ingress class nos ficheiros):
+   kubectl apply -f cert-manager/issuers/clusterissuer-letsencrypt-staging.yaml
+   kubectl apply -f cert-manager/issuers/clusterissuer-letsencrypt-prod.yaml
+
+3) rancher
+   Cattle via Helm. Pasta addons/rancher/helm (Helm no PATH; use --enable-helm):
+   kubectl kustomize --enable-helm rancher/helm | kubectl apply -f -
+   Se o pod do rancher falhar com "secret bootstrap-secret not found", crie a mesma
+   password que no values (helm template nem sempre aplica o Secret de bootstrap):
+   kubectl -n cattle-system create secret generic bootstrap-secret \
+     --from-literal=bootstrapPassword="A_SUA_SENHA" --dry-run=client -o yaml | kubectl apply -f -
+   kubectl -n cattle-system delete pod -l app=rancher
+   (Alternativa: helm upgrade --install em helm-commands.txt, que aplica o Secret)
+
+4) cert-manager ainda não pode emitir? Não crie ainda o Certificate optional em
+   rancher/helm/certificate-rancher-ingress-optional.yaml.
+
+Repositórios helm (máquina de administração / CI): repositorios-helm.txt
+
+Nota: "kubectl apply -f" numa pasta que contém kustomization.yaml aplica ficheiros soltos;
+para pastas de Kustomize use "kubectl apply -k" ou, para o cert-manager, a URL com "-f" acima.

@@ -1,0 +1,57 @@
+# Ajuste obrigatório: hostname e bootstrapPassword. Réplicas: use >=2 em produção/HA.
+# Chart: https://github.com/rancher/rancher (server-charts)
+
+hostname: rancher.bstpm.com
+bootstrapPassword: "linux2222"
+
+# Em cluster pequeno comece com 1; em produção suba (ex.: 3) e defina antiAffinity.
+replicas: 1
+antiAffinity: preferred
+priorityClassName: rancher-critical
+
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  path: /
+  pathType: ImplementationSpecific
+  servicePort: 80
+  tls:
+    # rancher: certificados autoassinados do Rancher (laboratório)
+    # letsEncrypt: requer bloco letsEncrypt abaixo e registo no DNS
+    # secret: use cert-manager e o Secret tls-rancher-ingress (ver certificate-rancher-ingress-optional.yaml)
+    source: rancher
+    secretName: tls-rancher-ingress
+
+# Só se ingress.tls.source = letsEncrypt
+letsEncrypt:
+  email: "" # preencha se source=letsEncrypt
+  environment: production
+  ingress:
+    class: nginx
+
+# Compat cert-manager: deixe vazio na maior parte dos casos; confira na doc se precisar fixar
+certmanager:
+  version: ""
+
+addLocal: "true"
+tls: ingress
+privateCA: false
+useBundledSystemChart: false
+systemDefaultRegistry: ""
+hostNetwork: false
+debug: false
+auditLog:
+  enabled: false
+
+startupProbe:
+  failureThreshold: 12
+  periodSeconds: 10
+  timeoutSeconds: 5
+livenessProbe:
+  failureThreshold: 5
+  periodSeconds: 30
+  timeoutSeconds: 5
+readinessProbe:
+  failureThreshold: 5
+  periodSeconds: 30
+  timeoutSeconds: 5

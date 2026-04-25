@@ -1,0 +1,16 @@
+# ACME Let's Encrypt (ambiente de STAGING) — use para testes; troque o email.
+# Só aplicar após o cert-manager estar pronto: kubectl get pods -n cert-manager
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    email: altere@exemplo.com
+    privateKeySecretRef:
+      name: letsencrypt-staging-issuer
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    solvers:
+      - http01:
+          ingress:
+            class: nginx

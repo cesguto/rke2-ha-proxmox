@@ -1,0 +1,18 @@
+# Rancher Server (chart rancher-stable). Aplicar a partir de addons/:
+#   kubectl kustomize --enable-helm rancher/helm | kubectl apply -f -
+# (kubectl apply -k exige --enable-helm no kustomize; a variável KUSTOMIZE_ENABLE_HELM nem sempre basta.)
+# Necessita cert-manager (recomendado) e o binário helm no PATH.
+# Ajuste values.yaml (hostname, senha, réplicas) antes de aplicar.
+# Chart: 2.14.x requer K8s <1.36 (Rancher 2.13 exige <1.35; não use em v1.35+).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: cattle-system
+resources:
+  - namespace.yaml
+helmCharts:
+  - name: rancher
+    repo: https://releases.rancher.com/server-charts/latest
+    version: 2.14.0
+    releaseName: rancher
+    namespace: cattle-system
+    valuesFile: values.yaml

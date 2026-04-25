@@ -1,0 +1,13 @@
+# Equivalente à pasta helm/, usando o Helm diretamente
+# repositórios: ver ../../repositorios-helm.txt
+
+helm repo add rancher-stable https://releases.rancher.com/server-charts/latest
+helm repo update
+
+# Instalar depois de cert-manager estar Ready e o namespace existir
+kubectl apply -f namespace.yaml
+
+helm upgrade --install rancher rancher-stable/rancher \
+  --namespace cattle-system \
+  --version 2.14.0 \
+  -f values.yaml
